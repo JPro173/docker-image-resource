@@ -1,8 +1,11 @@
-FROM concourse/buildroot:iptables
+FROM alpine:edge
 
-ADD docker/ /usr/local/bin/
-RUN /usr/local/bin/docker --version
+COPY assets/* /opt/resource/
 
-ADD assets/ /opt/resource/
-
-ADD ecr-login /usr/local/bin/docker-credential-ecr-login
+RUN apk add --no-cache \
+    ca-certificates \
+    curl \
+    jq \
+    openssh \
+    openssl \
+ && update-ca-certificates
